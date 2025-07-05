@@ -14,3 +14,5 @@ Eine minimale Galerie-Anwendung in Flask. Bilder liegen in thematischen Ordnern 
    ```
 
 Die Galerie ist dann unter `http://localhost:5000` erreichbar, das Backoffice unter `http://localhost:5000/admin`.
+
+In der Galerie kann optional nach Tags gefiltert werden, indem man einen Tag aus der Dropdown-Liste auswählt.
