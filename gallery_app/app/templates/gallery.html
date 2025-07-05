@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}Galerie{% endblock %}
+{% block content %}
+<h1>Galerie</h1>
+{% for folder in folders %}
+<h2>{{ folder.meta.title }} ({{ folder.meta.date }})</h2>
+<ul>
+  {% for img in folder.images %}
+  <li><img src="{{ url_for('gallery.image', folder=folder.name, filename=img.filename) }}" alt=""></li>
+  {% endfor %}
+</ul>
+{% endfor %}
+{% endblock %}
