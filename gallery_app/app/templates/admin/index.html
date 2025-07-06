@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block title %}Admin{% endblock %}
+{% block content %}
+<h1>Ordner</h1>
+<ul>
+  {% for folder in folders %}
+  <li><a href="{{ url_for('admin.edit_folder', folder_name=folder.name) }}">{{ folder.meta.title }} ({{ folder.meta.date }})</a></li>
+  {% endfor %}
+</ul>
+{% endblock %}

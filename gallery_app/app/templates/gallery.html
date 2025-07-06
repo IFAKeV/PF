@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}Galerie{% endblock %}
+{% block content %}
+<h1>Galerie</h1>
+
+<form method="get">
+  <label for="tag">Tag:</label>
+  <select name="tag" id="tag">
+    <option value="">Alle</option>
+    {% for tag in tags %}
+    <option value="{{ tag }}" {% if tag == selected_tag %}selected{% endif %}>{{ tag }}</option>
+    {% endfor %}
+  </select>
+  <button type="submit">Filter</button>
+</form>
+
+{% for folder in folders %}
+<h2>{{ folder.meta.title }} ({{ folder.meta.date }})</h2>
+<p>Tags: {{ folder.meta.tags|join(', ') }}</p>
+<ul>
+  {% for img in folder.images %}
+  <li><img src="{{ url_for('gallery.image', folder=folder.name, filename=img.filename) }}" alt=""></li>
+  {% endfor %}
+</ul>
+{% endfor %}
+{% endblock %}
