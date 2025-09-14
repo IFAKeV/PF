@@ -1,18 +1,17 @@
-# Private Flask Gallery
+# Sommertermine 2026
 
-Eine minimale Galerie-Anwendung in Flask. Bilder liegen in thematischen Ordnern unter `gallery_app/galleries`. Jeder Ordner enthält eine `folder_meta.yaml` mit Titel, Datum und Tags. Die App liest IPTC-Daten der Bilder aus und ermöglicht deren Bearbeitung im Backoffice.
+Diese kleine Webseite zeigt eine Auswahl von Veranstaltungen im Sommer 2026 im Stil von Quartettkarten.
 
-## Starten
+## Nutzung
 
-1. Abhängigkeiten installieren:
-   ```bash
-   pip install -r requirements.txt
-   ```
-2. Anwendung starten:
-   ```bash
-   python run.py
-   ```
+Öffne die Datei `index.html` in einem Browser deiner Wahl. Beim Überfahren einer Karte mit der Maus wird sie leicht vergrößert, als würde man sie hochheben.
 
-Die Galerie ist dann unter `http://localhost:5000` erreichbar, das Backoffice unter `http://localhost:5000/admin`.
+## Struktur
 
-In der Galerie kann optional nach Tags gefiltert werden, indem man einen Tag aus der Dropdown-Liste auswählt.
+- `index.html` – Einstiegspunkt der Webseite
+- `styles.css` – Gestaltung der Karten und des Layouts
+- `script.js` – Logik zum Erzeugen der Karten aus den Termindaten
+
+## Anforderungen
+
+Die Seite nutzt ausschließlich HTML, CSS und JavaScript ohne zusätzliche Bibliotheken.
