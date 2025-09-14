@@ -1,24 +1,24 @@
 const events = [
   {
-    title: 'Open-Air Konzert',
-    date: '12. Juni 2026',
-    location: 'Stadtpark',
+    title: 'Big Knock',
+    date: 't.b.a.',
+    location: 'Somewhere in England',
     description: 'Ein Abend voller Musik unter freiem Himmel.'
   },
   {
-    title: 'Sommerfest',
+    title: 'Bergrennen Gaschney',
     date: '5. Juli 2026',
-    location: 'Marktplatz',
+    location: 'In den Vogesen',
     description: 'Bunte Stände, Spiele und leckeres Essen.'
   },
   {
-    title: 'Strandvolleyball Turnier',
+    title: 'Sommer Dieseltreffen',
     date: '16. August 2026',
-    location: 'Seebad',
+    location: 'Geyern',
     description: 'Teams treten am Strand gegeneinander an.'
   },
   {
-    title: 'Herbstlicher Wandertag',
+    title: 'Internationales Dieselmotorradtreffen',
     date: '20. September 2026',
     location: 'Bergpfad',
     description: 'Wanderung durch die ersten Herbstfarben.'
