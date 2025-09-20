@@ -38,12 +38,16 @@ function createCard(event) {
   const card = document.createElement('div');
   card.className = 'card';
 
+  const linkMarkup = event.link
+    ? `<p class="card-link"><a href="${event.link}" target="_blank" rel="noopener">${event.link}</a></p>`
+    : '';
+
   card.innerHTML = `
     <h2>${event.title}</h2>
     <p><strong>Datum:</strong> ${event.date}</p>
     <p><strong>Ort:</strong> ${event.location}</p>
     <p>${event.description}</p>
-    <p>${event.link}</p>
+    ${linkMarkup}
   `;
 
   return card;
