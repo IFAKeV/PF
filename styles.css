@@ -1,10 +1,9 @@
 :root {
-  --background: #e5e4df;
+  --background-start: #f5f1ec;
+  --background-end: #dcd6cc;
   --card-surface: #f8f8f5;
   --text-strong: #2f2922;
   --text-muted: #6b6156;
-  --shadow-primary: rgba(68, 56, 45, 0.18);
-  --shadow-secondary: rgba(117, 103, 87, 0.2);
 }
 
 * {
@@ -13,7 +12,9 @@
 
 body {
   font-family: "Montserrat", "Helvetica Neue", Arial, sans-serif;
-  background-color: var(--background);
+  background: linear-gradient(160deg, var(--background-start) 0%, var(--background-end) 100%);
+  background-color: var(--background-start);
+  background-attachment: fixed;
   color: var(--text-strong);
   margin: 0;
   min-height: 100vh;
@@ -47,16 +48,18 @@ h1 {
   padding: 32px 28px;
   text-align: left;
   box-shadow:
-    0 32px 45px -28px var(--shadow-secondary),
-    0 24px 40px -30px var(--shadow-primary);
+    18px 28px 45px -35px rgba(72, 59, 47, 0.28),
+    32px 60px 95px -60px rgba(133, 118, 101, 0.35),
+    48px 88px 120px -70px rgba(190, 175, 156, 0.36);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .card:hover {
   transform: translateY(-6px);
   box-shadow:
-    0 40px 55px -26px rgba(60, 47, 36, 0.25),
-    0 28px 45px -28px rgba(104, 90, 74, 0.24);
+    20px 36px 55px -32px rgba(64, 52, 41, 0.32),
+    38px 76px 110px -60px rgba(128, 111, 93, 0.38),
+    56px 104px 150px -84px rgba(189, 173, 152, 0.42);
 }
 
 .card h2 {
