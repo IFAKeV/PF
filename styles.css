@@ -41,7 +41,7 @@ h1 {
 }
 
 #cards-container {
-  width: min(1120px, 100%);
+  width: min(1280px, 92vw);
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
   gap: 36px;
