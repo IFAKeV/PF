@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diesel-Season 2026 – Mockup 3</title>
+  <style>
+    :root {
+      --bg: #f7f7f7;
+      --text: #0f172a;
+      --accent: #22c55e;
+      --accent-muted: rgba(34, 197, 94, 0.15);
+      --muted: #64748b;
+      --card: #ffffff;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: "Satoshi", "Helvetica Neue", Arial, sans-serif;
+      background: linear-gradient(120deg, #eef2ff 0%, #fdf2f8 35%, #f7fee7 100%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      padding: clamp(2.5rem, 4vw, 4rem) clamp(1.5rem, 6vw, 6rem);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    header h1 {
+      margin: 0;
+      font-size: clamp(2.4rem, 6vw, 3.8rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    header p {
+      max-width: 45ch;
+      font-size: clamp(1.05rem, 2.3vw, 1.25rem);
+      color: var(--muted);
+      line-height: 1.6;
+      margin: 0;
+    }
+    .grid {
+      flex: 1;
+      display: grid;
+      gap: clamp(1.5rem, 3vw, 3rem);
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      padding: clamp(2rem, 5vw, 5rem) clamp(1.5rem, 6vw, 6rem) clamp(4rem, 10vw, 6rem);
+    }
+    .event {
+      background: var(--card);
+      border-radius: 1.75rem;
+      padding: clamp(1.75rem, 3vw, 2.5rem);
+      display: grid;
+      gap: 1.1rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 35px 60px -35px rgba(15, 23, 42, 0.35);
+      border: 1px solid rgba(15, 23, 42, 0.06);
+    }
+    .event::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, transparent 20%, rgba(34, 197, 94, 0.08));
+      pointer-events: none;
+    }
+    .event time {
+      font-size: 0.95rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: var(--muted);
+    }
+    .event h2 {
+      margin: 0;
+      font-size: clamp(1.6rem, 3vw, 2.1rem);
+      font-weight: 600;
+    }
+    .event .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--accent);
+      padding: 0.4rem 0.9rem;
+      border-radius: 999px;
+      background: var(--accent-muted);
+      width: fit-content;
+    }
+    .location {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+      display: grid;
+      gap: 0.25rem;
+    }
+    .event p {
+      margin: 0;
+      line-height: 1.7;
+    }
+    .links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+    .links a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.55rem 1rem;
+      border-radius: 999px;
+      border: 1px solid rgba(15, 23, 42, 0.15);
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(4px);
+    }
+    .links a:hover,
+    .links a:focus {
+      transform: translateY(-2px);
+      border-color: rgba(34, 197, 94, 0.5);
+    }
+    footer {
+      padding: 2rem 1.5rem 3rem;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Vier Highlights der Diesel-Community</h1>
+    <p>Eine farbenfrohe Übersicht der geplanten Treffen 2026 – ideal für eine Landingpage oder Social-Media-Teaser.</p>
+  </header>
+  <section class="grid">
+    <article class="event">
+      <span class="tag">Season Start</span>
+      <time datetime="2026-06-04">04.–07.06.2026</time>
+      <h2>Big Knock · Care Ashore</h2>
+      <p class="location">
+        <span>Springbok Est, Dunsfold Rd</span>
+        <span>Alfold GU6 8EX</span>
+        <span>Hinweis: Wir befinden uns auf der rückwärtigen Seite des Haupthauses – der Walled Garden Road folgen und bei den hohen Fichten einbiegen.</span>
+      </p>
+      <p>Verlängertes Wochenende in Surrey: lockere Atmosphäre, viel Austausch und Diesel-Nerdtalk bis spät in die Nacht.</p>
+      <div class="links">
+        <a href="http://www.dieselbike.net/" target="_blank" rel="noreferrer noopener">Website</a>
+      </div>
+    </article>
+
+    <article class="event">
+      <span class="tag">Motorsport</span>
+      <time datetime="2026-07-11">11.–12.07.2026</time>
+      <h2>Bergrennen Gaschney</h2>
+      <p class="location">
+        <span>Muhlbach sur Munster</span>
+        <span>Course ZUE · Championnats de Suisse FHRM &amp; SMLT</span>
+      </p>
+      <p>Ein Wochenende voller Kehren, Höhenmeter und Zweirad-Historie – perfekter Schauplatz für Diesel-Umbauten mit Racing-Genen.</p>
+      <div class="links">
+        <a href="https://www.nouveau-moto-club-de-munster.net/" target="_blank" rel="noreferrer noopener">Eventseite</a>
+      </div>
+    </article>
+
+    <article class="event">
+      <span class="tag">Community</span>
+      <time datetime="2026-08-16">16.08.2026</time>
+      <h2>Sommer Dieseltreffen?</h2>
+      <p class="location">
+        <span>Geyern</span>
+      </p>
+      <p>Noch in Planung, aber schon im Kalender markiert: das mögliche Sommerevent für alle, die es entspannt mögen.</p>
+      <div class="links">
+        <a href="http://sommerdiesel.de/" target="_blank" rel="noreferrer noopener">Infos</a>
+      </div>
+    </article>
+
+    <article class="event">
+      <span class="tag">Season Finale</span>
+      <time datetime="2026-09-11">11.–13.09.2026</time>
+      <h2>Internationales Dieselmotorradtreffen</h2>
+      <p class="location">
+        <span>Zeltplatz Abenteuerland</span>
+        <span>34414 Warburg/Bonenburg</span>
+      </p>
+      <p>Wanderung durch die ersten Herbstfarben, gemeinsame Ausfahrten und Lagerfeuer: das große Finale der Saison.</p>
+      <div class="links">
+        <a href="#">Details folgen</a>
+      </div>
+    </article>
+  </section>
+  <footer>
+    Letzte Aktualisierung: April 2024 · Alle Angaben ohne Gewähr.
+  </footer>
+</body>
+</html>
