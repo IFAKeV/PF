@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diesel-Termine 2026 – Mockup 1</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      --accent: #2d6a4f;
+      --muted: #4a4a4a;
+      --bg: #f5f5f5;
+      --card-bg: #ffffff;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: #1a1a1a;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--accent), #52b788);
+      color: #fff;
+      padding: 4rem 1.5rem 3rem;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: clamp(2.4rem, 4vw, 3.4rem);
+      letter-spacing: 0.05em;
+    }
+
+    header p {
+      max-width: 34rem;
+      margin: 1.5rem auto 0;
+      font-size: 1.05rem;
+      line-height: 1.6;
+    }
+
+    main {
+      max-width: 900px;
+      margin: -2rem auto 4rem;
+      padding: 0 1.5rem;
+    }
+
+    .event-list {
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    .event {
+      background: var(--card-bg);
+      border-radius: 14px;
+      padding: 1.75rem;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .event:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.12);
+    }
+
+    .event h2 {
+      margin: 0 0 0.75rem;
+      font-size: 1.6rem;
+      color: var(--accent);
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem 2.5rem;
+      margin-bottom: 1.1rem;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    .meta span {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .event address {
+      font-style: normal;
+      line-height: 1.5;
+      margin-bottom: 1rem;
+    }
+
+    .event p {
+      margin: 0 0 0.9rem;
+      line-height: 1.6;
+    }
+
+    .event a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .event a:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem 1.5rem 3rem;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Diesel-Events 2026</h1>
+    <p>Vier handverlesene Termine für Diesel-Fans im kommenden Jahr. Perfekt zum Planen, Treffen und Unterwegssein.</p>
+  </header>
+  <main>
+    <section class="event-list">
+      <article class="event">
+        <h2>Diesel-Season 2026 – Big Knock</h2>
+        <div class="meta">
+          <span>04.–07. Juni 2026</span>
+          <span>Care Ashore, Springbok Est, Dunsfold Rd, Alfold GU6 8EX</span>
+        </div>
+        <address>
+          You can arrive a few days early. We are on the far side of the main house – clockwise round the walled Garden road &amp; turn in by the tall fir trees.
+        </address>
+        <a href="http://www.dieselbike.net/">www.dieselbike.net</a>
+      </article>
+
+      <article class="event">
+        <h2>Bergrennen Gaschney</h2>
+        <div class="meta">
+          <span>11.–12. Juli 2026</span>
+          <span>Muhlbach sur Munster</span>
+        </div>
+        <p>Course ZUE et Championnats de Suisse FHRM et SMLT.</p>
+        <a href="https://www.nouveau-moto-club-de-munster.net/">nouveau-moto-club-de-munster.net</a>
+      </article>
+
+      <article class="event">
+        <h2>Sommer Dieseltreffen?</h2>
+        <div class="meta">
+          <span>16. August 2026</span>
+          <span>Geyern</span>
+        </div>
+        <a href="http://sommerdiesel.de/">sommerdiesel.de</a>
+      </article>
+
+      <article class="event">
+        <h2>Internationales Dieselmotorradtreffen 2026</h2>
+        <div class="meta">
+          <span>11.–13. September 2026</span>
+          <span>Zeltplatz Abenteuerland, 34414 Warburg/Bonenburg</span>
+        </div>
+        <p>Wanderung durch die ersten Herbstfarben.</p>
+      </article>
+    </section>
+  </main>
+  <footer>
+    © 2026 Diesel-Community. Alle Angaben ohne Gewähr.
+  </footer>
+</body>
+</html>
