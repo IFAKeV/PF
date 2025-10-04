@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Diesel-Events 2026 – Mockup 3</title>
+  <style>
+    :root {
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      background: #ffffff;
+      color: #17202a;
+    }
+
+    body {
+      margin: 0;
+      background: linear-gradient(180deg, #ffffff 0%, #eef2f5 100%);
+    }
+
+    .page {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 5rem;
+      display: grid;
+      gap: 3rem;
+    }
+
+    header {
+      display: grid;
+      gap: 1.25rem;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: clamp(2.4rem, 4vw + 1rem, 4rem);
+      margin: 0;
+      font-weight: 600;
+    }
+
+    header p {
+      margin: 0 auto;
+      max-width: 48rem;
+      line-height: 1.7;
+      color: #4b5563;
+      font-size: 1.1rem;
+    }
+
+    .grid {
+      display: grid;
+      gap: 1.75rem;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.85);
+      border-radius: 20px;
+      padding: 1.75rem;
+      border: 1px solid rgba(23, 32, 42, 0.08);
+      box-shadow: 0 20px 45px -35px rgba(15, 23, 42, 0.45);
+      display: grid;
+      gap: 0.85rem;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 50px -28px rgba(15, 23, 42, 0.5);
+    }
+
+    .card h2 {
+      margin: 0;
+      font-size: 1.4rem;
+      color: #0f172a;
+    }
+
+    .date {
+      font-size: 0.9rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #6b7280;
+    }
+
+    .location {
+      font-weight: 600;
+      color: #334155;
+    }
+
+    .details {
+      margin: 0;
+      line-height: 1.6;
+      color: #4b5563;
+    }
+
+    address {
+      font-style: normal;
+      line-height: 1.5;
+      color: #475569;
+    }
+
+    .links {
+      display: inline-flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      font-size: 0.95rem;
+    }
+
+    .links a {
+      color: #0f766e;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .links a:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.9rem;
+      color: #6b7280;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <h1>Veranstaltungen · Diesel 2026</h1>
+      <p>Vier Termine, vier Stimmungen: vom britischen Big Knock über das französische Bergrennen bis zum großen Herbsttreffen. Diese Mockup-Variante setzt auf luftige Karten im Mosaik.</p>
+    </header>
+
+    <section class="grid">
+      <article class="card">
+        <div class="date">04.–07.06.2026</div>
+        <h2>Diesel-Season 2026 – Big Knock</h2>
+        <div class="location">Care Ashore · Alfold (UK)</div>
+        <p class="details">Anreise bereits einige Tage vorher möglich. Das Camp befindet sich hinter dem Haupthaus entlang der Gartenmauer – bei den hohen Tannen einbiegen.</p>
+        <address>
+          Springbok Est · Dunsfold Rd<br />
+          Alfold GU6 8EX
+        </address>
+        <div class="links">
+          <a href="http://www.dieselbike.net/" target="_blank" rel="noreferrer noopener">Zur Website</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="date">11.–12.07.2026</div>
+        <h2>Bergrennen Gaschney</h2>
+        <div class="location">Muhlbach sur Munster · Frankreich</div>
+        <p class="details">Course ZUE und Etappe der Schweizer Meisterschaften FHRM &amp; SMLT – spektakuläre Höhenmeter im Elsass.</p>
+        <div class="links">
+          <a href="https://www.nouveau-moto-club-de-munster.net/" target="_blank" rel="noreferrer noopener">Informationen</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="date">16.08.2026</div>
+        <h2>Sommer Dieseltreffen?</h2>
+        <div class="location">Geyern · Deutschland</div>
+        <p class="details">Noch im Werden – Raum für spontane Programmideen und entspannte Gespräche.</p>
+        <div class="links">
+          <a href="http://sommerdiesel.de/" target="_blank" rel="noreferrer noopener">Zur Seite</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="date">11.–13.09.2026</div>
+        <h2>Internationales Dieselmotorradtreffen</h2>
+        <div class="location">Zeltplatz Abenteuerland · Warburg/Bonenburg</div>
+        <p class="details">Spätsommerliche Atmosphäre, Wanderung durch erste Herbstfarben und viel Zeit für Austausch.</p>
+        <address>
+          34414 Warburg/Bonenburg
+        </address>
+      </article>
+    </section>
+
+    <footer>Konzept-Layout · Inhalte vorbehaltlich weiterer Details.</footer>
+  </div>
+</body>
+</html>
