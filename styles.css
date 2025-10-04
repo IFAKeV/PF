@@ -1,7 +1,7 @@
 :root {
-  --background-start: #f5f1ec;
-  --background-end: #dcd6cc;
-  --card-surface: #f8f8f5;
+  --card-top: rgb(244, 243, 241);
+  --card-mid: rgb(238, 237, 236);
+  --card-bottom: rgb(233, 233, 225);
   --text-strong: #2f2922;
   --text-muted: #6b6156;
 }
@@ -12,8 +12,14 @@
 
 body {
   font-family: "Montserrat", "Helvetica Neue", Arial, sans-serif;
-  background: linear-gradient(160deg, var(--background-start) 0%, var(--background-end) 100%);
-  background-color: var(--background-start);
+  background: linear-gradient(
+    135deg,
+    rgb(245, 245, 244) 0%,
+    rgb(225, 224, 219) 33%,
+    rgb(228, 227, 221) 66%,
+    rgb(212, 208, 203) 100%
+  );
+  background-color: rgb(245, 245, 244);
   background-attachment: fixed;
   color: var(--text-strong);
   margin: 0;
@@ -35,15 +41,19 @@ h1 {
 }
 
 #cards-container {
-  width: min(1120px, 100%);
+  width: min(1280px, 92vw);
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
   gap: 36px;
 }
 
 .card {
-  background-color: var(--card-surface);
-  border-radius: 18px;
+  background: linear-gradient(
+    180deg,
+    var(--card-top) 0%,
+    var(--card-mid) 55%,
+    var(--card-bottom) 100%
+  );
   border: 1px solid rgba(82, 70, 58, 0.08);
   padding: 32px 28px;
   text-align: left;
