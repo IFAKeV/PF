@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Auto‑Whiteboard – Vernunft × Emotion / Understatement × Ausdruck</title>
+<style>
+  :root{
+    --bg: #0f1115; --panel:#151923; --ink:#e6e8ee; --muted:#9aa3b2; --accent:#77c0ff;
+    --grid:#202534; --axis:#3a4154; --danger:#ff6b6b; --ok:#68d391;
+  }
+  html,body{height:100%;margin:0;background:var(--bg);color:var(--ink);font:14px/1.4 ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif}
+  #app{display:grid;grid-template-rows:auto 1fr;gap:8px;height:100%}
+  .toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:10px;background:var(--panel);box-shadow:0 1px 0 #000 inset}
+  .toolbar>*{background:#0f131c;border:1px solid #202534;border-radius:10px;color:var(--ink);padding:8px 10px}
+  .toolbar input[type="text"], .toolbar input[type="url"]{min-width:18ch}
+  .toolbar button{cursor:pointer}
+  .toolbar .group{display:flex;gap:6px;align-items:center}
+
+  #boardWrap{position:relative;overflow:auto}
+  #board{position:relative; width:1800px; height:1000px; background:
+    linear-gradient(var(--axis) 0 0) center/2px 100%,
+    linear-gradient(90deg,var(--axis) 0 0) center/100% 2px,
+    radial-gradient(circle at center, transparent 0 480px, rgba(0,0,0,.05) 480px 100%),
+    repeating-linear-gradient(0deg, transparent 0 39px, var(--grid) 40px),
+    repeating-linear-gradient(90deg, transparent 0 39px, var(--grid) 40px);
+    border:1px solid #1b2030; box-shadow: inset 0 0 0 1px #0b0e16; border-radius:12px; margin:10px;}
+
+  .axis-label{position:absolute; color:var(--muted); font-weight:600; letter-spacing:.3px}
+  #labelX{bottom:8px; left:50%; transform:translateX(-50%)}
+  #labelX2{top:8px; left:50%; transform:translateX(-50%)}
+  #labelY{left:8px; top:50%; transform:translateY(-50%) rotate(-90deg); transform-origin:left top}
+  #labelY2{right:8px; top:50%; transform:translateY(-50%) rotate(90deg); transform-origin:right top}
+
+  .node{position:absolute; user-select:none; cursor:grab; display:flex; flex-direction:column; align-items:center; gap:6px}
+  .node:active{cursor:grabbing}
+  .chip{backdrop-filter: blur(3px); background:rgba(17,23,36,.7); border:1px solid #2a3246; color:var(--ink);
+        padding:6px 10px; border-radius:999px; font-weight:600; box-shadow:0 2px 6px rgba(0,0,0,.35)}
+  .card{background:#0f131c; border:1px solid #242b3d; border-radius:16px; padding:8px; box-shadow:0 4px 10px rgba(0,0,0,.35);}
+  .card img{display:block; max-width:100%; max-height:100%; border-radius:12px}
+  .meta{font-size:12px; color:var(--muted)}
+  .selected{outline:2px solid var(--accent); outline-offset:2px}
+  .handle{position:absolute; width:14px; height:14px; right:-7px; bottom:-7px; background:var(--accent); border-radius:4px; cursor:nwse-resize; box-shadow:0 0 0 2px #0b0e16}
+  .note{position:absolute; min-width:120px; max-width:260px; padding:8px 10px; background:#222838; color:var(--ink); border:1px dashed #3a4154; border-radius:10px}
+
+  .legend{position:absolute; right:14px; bottom:14px; background:#0f131c; border:1px solid #242b3d; border-radius:12px; padding:8px 10px; color:var(--muted)}
+
+  .tooltip{position:fixed; pointer-events:none; background:#0f131c; color:var(--ink); border:1px solid #2a3246; padding:6px 8px; border-radius:8px; font-size:12px; opacity:0; transition:opacity .12s}
+
+  .kbd{padding:2px 6px; border:1px solid #344; border-radius:6px; background:#0c0f16; color:#cfd6e6; font:12px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace}
+</style>
+</head>
+<body>
+<div id="app">
+  <div class="toolbar">
+    <div class="group">
+      <label>X‑Achse: <input id="inXLeft" type="text" value="Understatement"/></label>
+      <label><input id="inXRight" type="text" value="Ausdruck"/></label>
+    </div>
+    <div class="group">
+      <label>Y‑Achse: <input id="inYBottom" type="text" value="Emotional"/></label>
+      <label><input id="inYTop" type="text" value="Rational"/></label>
+    </div>
+    <div class="group">
+      <input id="lblNew" type="text" placeholder="Modellname (z. B. BMW E92)" />
+      <button id="btnAdd">+ Text‑Karte</button>
+    </div>
+    <div class="group">
+      <input id="urlImg" type="url" placeholder="Bild‑URL (optional)" />
+      <input id="fileImg" type="file" accept="image/*" />
+      <button id="btnAddImg">+ Bild‑Karte</button>
+    </div>
+    <div class="group">
+      <button id="btnNote">+ Notiz</button>
+      <button id="btnSave">↥ Speichern</button>
+      <button id="btnLoad">↧ Laden</button>
+      <button id="btnClear" title="Board leeren">Leeren</button>
+    </div>
+    <div style="margin-left:auto" class="group">
+      <span class="kbd">Maus ziehen</span> bewegen · <span class="kbd">Mausrad</span> Größe · <span class="kbd">Dbl‑Klick</span> Text · <span class="kbd">Entf</span> löschen
+    </div>
+  </div>
+
+  <div id="boardWrap">
+    <div id="board" tabindex="0" aria-label="Whiteboard">
+      <div id="labelX" class="axis-label">Understatement ↔ Ausdruck</div>
+      <div id="labelX2" class="axis-label"></div>
+      <div id="labelY" class="axis-label">Rational ↕ Emotional</div>
+      <div id="labelY2" class="axis-label"></div>
+      <div class="legend">Je größer, desto begehrter. Rechts = ausdrucksstark · Oben = rational</div>
+    </div>
+  </div>
+</div>
+
+<div id="tip" class="tooltip"></div>
+
+<script>
+(() => {
+  const board = document.getElementById('board');
+  const tip = document.getElementById('tip');
+  const $ = (id) => document.getElementById(id);
+
+  // Axis label bindings
+  const syncAxes = () => {
+    $('labelX').textContent = `${$('inXLeft').value} ↔ ${$('inXRight').value}`;
+    $('labelY').textContent = `${$('inYTop').value} ↕ ${$('inYBottom').value}`;
+    $('labelX2').textContent = '';
+    $('labelY2').textContent = '';
+  };
+  ['inXLeft','inXRight','inYBottom','inYTop'].forEach(id => $(id).addEventListener('input', syncAxes));
+  syncAxes();
+
+  const state = { nodes: [], notes: [] };
+
+  function uid(){ return 'n'+Math.random().toString(36).slice(2,9); }
+
+  function createNode({x=880,y=480,w=180,h=120,label='Modell',img=null,scale=1}){
+    const id = uid();
+    const el = document.createElement('div');
+    el.className = 'node';
+    el.dataset.id = id;
+    el.style.left = x+'px';
+    el.style.top = y+'px';
+
+    const chip = document.createElement('div');
+    chip.className = 'chip';
+    chip.textContent = label;
+
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.style.width = w+'px';
+    card.style.height = h+'px';
+
+    if(img){
+      const im = document.createElement('img');
+      im.src = img;
+      card.appendChild(im);
+    } else {
+      const ph = document.createElement('div');
+      ph.style.display='grid';ph.style.placeItems='center';ph.style.height='100%';ph.style.color='var(--muted)';
+      ph.textContent = 'Kein Bild';
+      card.appendChild(ph);
+    }
+
+    const meta = document.createElement('div');
+    meta.className = 'meta';
+    meta.textContent = 'Skalieren: Mausrad · Dbl‑Klick: Titel';
+
+    const handle = document.createElement('div');
+    handle.className = 'handle';
+
+    el.append(chip, card, meta, handle);
+    board.appendChild(el);
+
+    // selection
+    el.addEventListener('pointerdown', (e)=> select(el,e));
+    el.addEventListener('dblclick', ()=> editLabel(chip));
+
+    // drag move
+    dragMove(el);
+
+    // resize handle
+    handle.addEventListener('pointerdown', (e)=> startResize(e, el));
+
+    // wheel scale
+    el.addEventListener('wheel', (e)=>{
+      e.preventDefault();
+      const k = e.deltaY < 0 ? 1.08 : 0.93; // größer/geiler
+      const rect = card.getBoundingClientRect();
+      let nw = Math.max(80, Math.min(600, rect.width * k));
+      let nh = Math.max(60, Math.min(420, rect.height * k));
+      card.style.width = nw+'px';
+      card.style.height = nh+'px';
+      persist();
+    }, {passive:false});
+
+    // delete with Delete key when selected
+    el.addEventListener('keydown', (e)=>{
+      if(e.key==='Delete') { el.remove(); persist(); }
+    });
+
+    state.nodes.push({id,x,y,w,h,label,img});
+    persist();
+    return el;
+  }
+
+  function select(el, ev){
+    document.querySelectorAll('.node').forEach(n=>n.classList.remove('selected'));
+    el.classList.add('selected');
+    el.focus({preventScroll:true});
+  }
+
+  function editLabel(chip){
+    const t = prompt('Neuer Titel:', chip.textContent);
+    if(t!=null){ chip.textContent = t; persist(); }
+  }
+
+  function dragMove(el){
+    let sx=0, sy=0, startL=0, startT=0;
+    const onDown = (e)=>{
+      if(e.target.classList.contains('handle')) return; // resizing handled elsewhere
+      e.preventDefault(); el.setPointerCapture(e.pointerId);
+      sx=e.clientX; sy=e.clientY;
+      startL=parseFloat(el.style.left); startT=parseFloat(el.style.top);
+      tip.textContent='Ziehen zum Platzieren'; tip.style.opacity=1;
+    };
+    const onMove = (e)=>{
+      if(!el.hasPointerCapture?.(e.pointerId)) return;
+      const dx=e.clientX-sx, dy=e.clientY-sy;
+      el.style.left = (startL+dx)+'px';
+      el.style.top  = (startT+dy)+'px';
+    };
+    const onUp = (e)=>{
+      if(el.hasPointerCapture?.(e.pointerId)) el.releasePointerCapture(e.pointerId);
+      tip.style.opacity=0; persist();
+    };
+    el.addEventListener('pointerdown', onDown);
+    window.addEventListener('pointermove', onMove);
+    window.addEventListener('pointerup', onUp);
+  }
+
+  function startResize(e, el){
+    e.preventDefault(); el.setPointerCapture(e.pointerId);
+    const card = el.querySelector('.card');
+    const r = card.getBoundingClientRect();
+    const sx=e.clientX, sy=e.clientY; const sw=r.width, sh=r.height;
+    const onMove=(ev)=>{
+      const nw=Math.max(80, Math.min(700, sw + (ev.clientX-sx)));
+      const nh=Math.max(60, Math.min(500, sh + (ev.clientY-sy)));
+      card.style.width=nw+'px'; card.style.height=nh+'px';
+    };
+    const onUp=(ev)=>{ el.releasePointerCapture(e.pointerId); persist(); window.removeEventListener('pointermove', onMove); window.removeEventListener('pointerup', onUp); };
+    window.addEventListener('pointermove', onMove);
+    window.addEventListener('pointerup', onUp);
+  }
+
+  // Notes
+  function createNote({x=40,y=40,text='Notiz…'}){
+    const n=document.createElement('div'); n.className='note'; n.style.left=x+'px'; n.style.top=y+'px'; n.textContent=text;
+    board.appendChild(n);
+    dragMove(n);
+    n.addEventListener('dblclick', ()=>{ const t=prompt('Notiz ändern:', n.textContent); if(t!=null){ n.textContent=t; persist(); } });
+    n.addEventListener('keydown',(e)=>{ if(e.key==='Delete'){ n.remove(); persist(); }});
+  }
+
+  // Persistence (localStorage)
+  function persist(){
+    const nodes=[...document.querySelectorAll('.node')].map(el=>{
+      const card=el.querySelector('.card');
+      return {
+        id:el.dataset.id,
+        x:parseFloat(el.style.left)||0,
+        y:parseFloat(el.style.top)||0,
+        w:parseFloat(getComputedStyle(card).width),
+        h:parseFloat(getComputedStyle(card).height),
+        label:el.querySelector('.chip').textContent,
+        img:card.querySelector('img')?.src||null
+      }
+    });
+    const notes=[...document.querySelectorAll('.note')].map(n=>({x:parseFloat(n.style.left)||0,y:parseFloat(n.style.top)||0,text:n.textContent}));
+    const axes={xL:$('inXLeft').value,xR:$('inXRight').value,yB:$('inYBottom').value,yT:$('inYTop').value};
+    const data={nodes,notes,axes, size:[board.scrollWidth, board.scrollHeight]};
+    localStorage.setItem('autoWhiteboard', JSON.stringify(data));
+  }
+  function load(data){
+    if(!data) try{ data=JSON.parse(localStorage.getItem('autoWhiteboard')||''); }catch(e){}
+    if(!data) return;
+    ['inXLeft','inXRight','inYBottom','inYTop'].forEach((k,i)=>{ $(k).value = [data.axes.xL,data.axes.xR,data.axes.yB,data.axes.yT][i] });
+    syncAxes();
+    [...document.querySelectorAll('.node,.note')].forEach(e=>e.remove());
+    (data.nodes||[]).forEach(n=>{ const el=createNode(n); const card=el.querySelector('.card'); card.style.width=n.w+'px'; card.style.height=n.h+'px'; });
+    (data.notes||[]).forEach(createNote);
+  }
+
+  // Buttons
+  $('btnAdd').addEventListener('click', ()=>{
+    const label=$('lblNew').value.trim()||'Modell'; createNode({label});
+  });
+  $('btnAddImg').addEventListener('click', ()=>{
+    const label=$('lblNew').value.trim()||'Modell';
+    const url=$('urlImg').value.trim();
+    if(url){ createNode({label,img:url}); return; }
+    const f=$('fileImg').files?.[0];
+    if(f){ const r=new FileReader(); r.onload=()=>createNode({label,img:r.result}); r.readAsDataURL(f); }
+  });
+  $('btnNote').addEventListener('click', ()=> createNote({}));
+  $('btnSave').addEventListener('click', ()=>{
+    persist(); const blob=new Blob([localStorage.getItem('autoWhiteboard')||'{}'], {type:'application/json'});
+    const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='auto-whiteboard-state.json'; a.click(); URL.revokeObjectURL(a.href);
+  });
+  $('btnLoad').addEventListener('click', ()=>{
+    const i=document.createElement('input'); i.type='file'; i.accept='application/json'; i.onchange=()=>{
+      const f=i.files?.[0]; if(!f) return; const r=new FileReader(); r.onload=()=>{ try{ load(JSON.parse(r.result)); persist(); }catch(e){ alert('Ungültige Datei.'); } }; r.readAsText(f); };
+    i.click();
+  });
+  $('btnClear').addEventListener('click', ()=>{ if(confirm('Board wirklich leeren?')){ localStorage.removeItem('autoWhiteboard'); [...document.querySelectorAll('.node,.note')].forEach(e=>e.remove()); }});
+
+  // Drop support (Bilder/Text)
+  board.addEventListener('dragover', (e)=>{ e.preventDefault(); });
+  board.addEventListener('drop', (e)=>{
+    e.preventDefault(); const dt=e.dataTransfer; const x=e.offsetX, y=e.offsetY;
+    if(dt.files && dt.files[0] && dt.files[0].type.startsWith('image/')){
+      const f=dt.files[0]; const r=new FileReader(); r.onload=()=>createNode({x,y,label:f.name.replace(/\.[^.]+$/,''), img:r.result}); r.readAsDataURL(f);
+    } else {
+      const t=dt.getData('text/plain'); if(t){ createNode({x,y,label:t}); }
+    }
+  });
+
+  // hover tooltip
+  board.addEventListener('pointermove', (e)=>{
+    tip.style.left = (e.clientX+12)+'px'; tip.style.top=(e.clientY+12)+'px';
+  });
+
+  // initial load (if any)
+  load();
+
+  // Seed: kleine Achs-Startpunkte
+  if(document.querySelectorAll('.node').length===0){
+    createNote({x:40,y:40,text:'Füge Modelle hinzu: Name eingeben, optional Bild wählen/URL, dann "+ Bild‑Karte".\nMausrad ändert Größe (je größer, desto geiler).'});
+  }
+})();
+</script>
+</body>
+</html>
