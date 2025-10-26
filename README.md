@@ -1,4 +1,4 @@
-# Private Flask Gallery
+# Boring Flask Gallery
 
 Eine minimale Galerie-Anwendung in Flask. Bilder liegen in thematischen Ordnern unter `gallery_app/galleries`. Jeder Ordner enthält eine `folder_meta.yaml` mit Titel, Datum und Tags. Die App liest IPTC-Daten der Bilder aus und ermöglicht deren Bearbeitung im Backoffice.
 
