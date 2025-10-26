@@ -130,6 +130,8 @@
   const pcTitle = document.getElementById('pcTitle');
   const $ = (id) => document.getElementById(id);
 
+  let ready = false;
+
   // Responsive Board: immer verfügbare Fläche nutzen
   function fitBoard(){
     // Der board-Container ist bereits width/height:100%; die Hülle (#boardWrap) wächst mit dem Fenster.
@@ -144,7 +146,7 @@
     $('labelY').textContent = `${$('inYTop').value} ↕ ${$('inYBottom').value}`;
     $('labelX2').textContent = '';
     $('labelY2').textContent = '';
-    persist();
+    if(ready) persist();
   };
   ['inXLeft','inXRight','inYBottom','inYTop'].forEach(id => $(id).addEventListener('input', syncAxes));
   syncAxes();
@@ -157,6 +159,7 @@
     const id = uid();
     const el = document.createElement('div');
     el.className = 'node';
+    el.tabIndex = 0;
     el.dataset.id = id;
     el.style.left = x+'px';
     el.style.top = y+'px';
@@ -286,6 +289,7 @@
     let sx=0, sy=0, startL=0, startT=0;
     const onDown = (e)=>{
       if(e.target.classList.contains('handle')) return; // resizing handled elsewhere
+      if(e.target.closest('button, input, textarea')) return; // allow UI controls (z. B. ⚙︎)
       e.preventDefault(); el.setPointerCapture(e.pointerId);
       sx=e.clientX; sy=e.clientY;
       startL=parseFloat(el.style.left)||0; startT=parseFloat(el.style.top)||0;
@@ -323,7 +327,7 @@
 
   // Notes
   function createNote({x=40,y=40,text='Notiz…'}){
-    const n=document.createElement('div'); n.className='note'; n.style.left=x+'px'; n.style.top=y+'px'; n.textContent=text;
+    const n=document.createElement('div'); n.className='note'; n.tabIndex = 0; n.style.left=x+'px'; n.style.top=y+'px'; n.textContent=text;
     board.appendChild(n);
     dragMove(n);
     n.addEventListener('dblclick', ()=>{ const t=prompt('Notiz ändern:', n.textContent); if(t!=null){ n.textContent=t; persist(); } });
@@ -352,13 +356,16 @@
     localStorage.setItem('autoWhiteboard', JSON.stringify(data));
   }
   function load(data){
+    ready = false;
     if(!data) try{ data=JSON.parse(localStorage.getItem('autoWhiteboard')||''); }catch(e){}
-    if(!data) return;
+    if(!data){ ready = true; return; }
     ['inXLeft','inXRight','inYBottom','inYTop'].forEach((k,i)=>{ $(k).value = [data.axes.xL,data.axes.xR,data.axes.yB,data.axes.yT][i] });
     syncAxes();
     [...document.querySelectorAll('.node,.note')].forEach(e=>e.remove());
     (data.nodes||[]).forEach(n=>{ const el=createNode(n); const card=el.querySelector('.card'); card.style.width=n.w+'px'; card.style.height=n.h+'px'; el.dataset.pros=JSON.stringify(n.pros||[]); el.dataset.cons=JSON.stringify(n.cons||[]); updateBadge(el); });
     (data.notes||[]).forEach(createNote);
+    ready = true;
+    persist();
   }
 
   // Buttons
